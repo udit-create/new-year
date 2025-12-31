@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        input {
+            width: 80%;
+            padding: 15px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+        button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #ff5252;
+        }
+        #qrcode {
+            margin: 30px 0;
+            display: flex;
+            justify-content: center;
+        }
+        .instructions {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 QR Code Generator 🎉</h1>
+        
+        <div class="instructions">
+            <h3>📋 How to share your New Year page:</h3>
+            <ol>
+                <li>Upload your <strong>newyear.html</strong> file to a free hosting service like:
+                    <ul>
+                        <li><strong>GitHub Pages</strong> (github.com)</li>
+                        <li><strong>Netlify</strong> (netlify.com)</li>
+                        <li><strong>Vercel</strong> (vercel.com)</li>
+                    </ul>
+                </li>
+                <li>Copy the URL of your hosted page</li>
+                <li>Paste it below and generate QR code</li>
+                <li>Save the QR code and share on WhatsApp! 💕</li>
+            </ol>
+        </div>
+        
+        <input type="url" id="urlInput" placeholder="Enter your hosted page URL here..." />
+        <br>
+        <button onclick="generateQR()">Generate QR Code 📱</button>
+        <button onclick="downloadQR()">Download QR Code 💾</button>
+        
+        <div id="qrcode"></div>
+        
+        <p><em>💡 Tip: For quick testing, you can also use services like ngrok to temporarily share your local file!</em></p>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script>
+        let qrCanvas = null;
+        
+        function generateQR() {
+            const url = document.getElementById('urlInput').value;
+            if (!url) {
+                alert('Please enter a URL first!');
+                return;
+            }
+            
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+            
+            QRCode.toCanvas(url, {
+                width: 300,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            }, function (error, canvas) {
+                if (error) {
+                    console.error(error);
+                    alert('Error generating QR code!');
+                } else {
+                    qrCanvas = canvas;
+                    qrContainer.appendChild(canvas);
+                }
+            });
+        }
+        
+        function downloadQR() {
+            if (!qrCanvas) {
+                alert('Please generate a QR code first!');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.download = 'newyear-qrcode.png';
+            link.href = qrCanvas.toDataURL();
+            link.click();
+        }
+        
+        // Generate QR for example URL on page load
+        window.onload = function() {
+            document.getElementById('urlInput').value = 'https://your-username.github.io/your-repo/newyear.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Are Amazing! 💖</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+        background-size: 400% 400%;
+        animation: gradientShift 8s ease infinite;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+    }
+    
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .love {
+        color: white;
+        text-align: center;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        background: rgba(0,0,0,0.3);
+        padding: 20px;
+        border-radius: 15px;
+        margin: 20px 0;
+        backdrop-filter: blur(10px);
+    }
+    
+    .compliment-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 25px;
+        margin: 20px auto;
+        border-radius: 20px;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        transform: translateY(0);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .compliment-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    
+    .floating-hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    
+    .heart {
+        position: absolute;
+        color: #ff69b4;
+        font-size: 20px;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    .magic-button {
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        margin: 20px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .magic-button:hover {
+        transform: scale(1.1);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    
+    .sparkle {
+        display: inline-block;
+        animation: sparkle 1.5s ease-in-out infinite;
+    }
+    
+    @keyframes sparkle {
+        0%, 100% { transform: scale(1) rotate(0deg); }
+        50% { transform: scale(1.2) rotate(180deg); }
+    }
+    
+    .message-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        display: none;
+        z-index: 1000;
+        max-width: 400px;
+    }
+    
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        display: none;
+        z-index: 999;
+    }
+</style>
+<body>
+    <div class="floating-hearts"></div>
+    <div class="overlay" id="overlay"></div>
+    <div class="message-popup" id="messagePopup">
+        <h2>✨ Special Message ✨</h2>
+        <p id="popupMessage"></p>
+        <button class="magic-button" onclick="closePopup()">Thank You! 💖</button>
+    </div>
+    
+    <h1 class="love">🎉 Happy New Year My Panda! 🐼</h1>
+    
+    <div class="compliment-box" onclick="showCompliment()">
+        <h2><span class="sparkle">✨</span> You Are Absolutely Amazing! <span class="sparkle">✨</span></h2>
+        <p>Click me for more love! 💕</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showCompliment()">
+        <h2>🌟 You're So Cute! 🌟</h2>
+        <p>Your smile lights up the world!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showCompliment()">
+        <h2>💖 You're Incredible! 💖</h2>
+        <p>Everything about you is perfect!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showCompliment()">
+        <h2>🦋 You're Beautiful Inside & Out! 🦋</h2>
+        <p>Your heart is pure gold!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="createHearts()">
+        <h2>💕 Send Love 💕</h2>
+        <p>Click to fill the screen with hearts!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="createStars()">
+        <h2>⭐ Make Stars ⭐</h2>
+        <p>Create magical floating stars!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showLoveMessage()">
+        <h2>💌 Love Note 💌</h2>
+        <p>Get a special romantic message!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="createRainbow()">
+        <h2>🌈 Rainbow Magic 🌈</h2>
+        <p>Spread colorful joy everywhere!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showCuteMessage()">
+        <h2>🥰 You're Adorable 🥰</h2>
+        <p>Get the cutest compliments ever!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="createButterflies()">
+        <h2>🦋 Butterfly Garden 🦋</h2>
+        <p>Watch beautiful butterflies dance!</p>
+    </div>
+    
+    <div class="compliment-box" onclick="showKiss()">
+        <h2>💋 Sweet Kiss 💋</h2>
+        <p>Receive a loving kiss from me!</p>
+    </div>
+    
+    <div style="text-align: center; margin: 30px 0;">
+        <button class="magic-button" onclick="showRandomCompliment()" style="padding: 10px 20px; font-size: 14px; margin: 5px;">More Love 💕</button>
+        <button class="magic-button" onclick="createHearts()" style="padding: 10px 20px; font-size: 14px; margin: 5px;">Hearts ❤️</button>
+        <button class="magic-button" onclick="createStars()" style="padding: 10px 20px; font-size: 14px; margin: 5px;">Stars ✨</button>
+        <button class="magic-button" onclick="showCuteMessage()" style="padding: 10px 20px; font-size: 14px; margin: 5px;">Cute 🥰</button>
+        <button class="magic-button" onclick="createRainbow()" style="padding: 10px 20px; font-size: 14px; margin: 5px;">Magic 🌈</button>
+    </div>
+    
+
+    
+    <div class="love">
+        <p>🎢 I know this year has been a roller coaster ride for you and for both of us, yet we survived this year and we are together at the start of 2025... 🤝 this is all that matters - that we are together. 💔 I know I have made many mistakes, mistakes that were not even easy to forget, but yet you forgive me and you stayed with me... 🙏 now I just want to promise you that I will be a better person for you, for myself in 2025 and will fight with you even less because I can't stay without fighting with you... 💕 I just love you so much and my intention was never to hurt you or make you sad - unknowingly it happens sometimes... ✨ but it won't happen again... this year I will become more mature.... 🌈 and I just hope this year brings only joy and happiness in your life and may all your problems get vanished and you only smile this year... 😊 with this I just want to wish you a very happy new year 🎊 and I love you for the rest of my life mi amor 💖✨🌟</p>
+    </div>
+    
+    <script>
+        const compliments = [
+            "You're absolutely stunning! 😍",
+            "Your smile could brighten anyone's day! ☀️",
+            "You're incredibly talented and amazing! 🌟",
+            "You have the most beautiful heart! 💖",
+            "You're perfect just the way you are! ✨",
+            "You make the world a better place! 🌍",
+            "You're so cute it's impossible! 🥰",
+            "You're a ray of sunshine! 🌞",
+            "You're absolutely wonderful! 🦋",
+            "You deserve all the happiness in the world! 🎉"
+        ];
+        
+        const loveMessages = [
+            "I love you more than words can say! 💖",
+            "You make my heart skip a beat! 💓",
+            "Forever and always, mi amor! ❤️",
+            "You're my everything! 🌌",
+            "My heart belongs to you! 💕"
+        ];
+        
+        const cuteMessages = [
+            "Boop! You're adorable! 🐼",
+            "Cuteness overload! 🥰",
+            "You're the cutest panda ever! 🐼💖",
+            "Aww, look at you being all cute! 😊",
+            "Maximum cuteness achieved! ✨💕"
+        ];
+        
+        function showCompliment() {
+            const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+            document.getElementById('popupMessage').textContent = randomCompliment;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('messagePopup').style.display = 'block';
+        }
+        
+        function showRandomCompliment() {
+            showCompliment();
+        }
+        
+        function closePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('messagePopup').style.display = 'none';
+        }
+        
+        function createHearts() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 6000);
+                }, i * 200);
+            }
+        }
+        
+        function createStars() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            for (let i = 0; i < 12; i++) {
+                setTimeout(() => {
+                    const star = document.createElement('div');
+                    star.className = 'heart';
+                    star.innerHTML = '⭐';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    heartsContainer.appendChild(star);
+                    
+                    setTimeout(() => {
+                        star.remove();
+                    }, 6000);
+                }, i * 150);
+            }
+        }
+        
+        function createRainbow() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            const rainbowEmojis = ['🌈', '🌟', '✨', '💖', '💜', '💛'];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const rainbow = document.createElement('div');
+                    rainbow.className = 'heart';
+                    rainbow.innerHTML = rainbowEmojis[Math.floor(Math.random() * rainbowEmojis.length)];
+                    rainbow.style.left = Math.random() * 100 + '%';
+                    rainbow.style.animationDelay = Math.random() * 2 + 's';
+                    heartsContainer.appendChild(rainbow);
+                    
+                    setTimeout(() => {
+                        rainbow.remove();
+                    }, 6000);
+                }, i * 100);
+            }
+        }
+        
+        function createButterflies() {
+            const heartsContainer = document.querySelector('.floating-hearts');
+            for (let i = 0; i < 8; i++) {
+                setTimeout(() => {
+                    const butterfly = document.createElement('div');
+                    butterfly.className = 'heart';
+                    butterfly.innerHTML = '🦋';
+                    butterfly.style.left = Math.random() * 100 + '%';
+                    butterfly.style.animationDelay = Math.random() * 2 + 's';
+                    heartsContainer.appendChild(butterfly);
+                    
+                    setTimeout(() => {
+                        butterfly.remove();
+                    }, 6000);
+                }, i * 300);
+            }
+        }
+        
+        function showLoveMessage() {
+            const randomMessage = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+            document.getElementById('popupMessage').textContent = randomMessage;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('messagePopup').style.display = 'block';
+        }
+        
+        function showCuteMessage() {
+            const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+            document.getElementById('popupMessage').textContent = randomMessage;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('messagePopup').style.display = 'block';
+        }
+        
+        function showKiss() {
+            document.getElementById('popupMessage').textContent = 'Sending you a big kiss! 💋💕';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('messagePopup').style.display = 'block';
+            
+            // Create kiss effects
+            const heartsContainer = document.querySelector('.floating-hearts');
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const kiss = document.createElement('div');
+                    kiss.className = 'heart';
+                    kiss.innerHTML = '💋';
+                    kiss.style.left = Math.random() * 100 + '%';
+                    kiss.style.animationDelay = Math.random() * 1 + 's';
+                    heartsContainer.appendChild(kiss);
+                    
+                    setTimeout(() => {
+                        kiss.remove();
+                    }, 4000);
+                }, i * 100);
+            }
+        }
+        
+        // Auto-create floating hearts periodically
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = Math.random() > 0.5 ? '💖' : '✨';
+            heart.style.left = Math.random() * 100 + '%';
+            document.querySelector('.floating-hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }, 3000);
+        
+        // Close popup when clicking overlay
+        document.getElementById('overlay').addEventListener('click', closePopup);
+    </script>
+</body>
+</html>
